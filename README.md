@@ -44,7 +44,7 @@ Cocktails_and_Ingredients/
 
 ## Data Source
 
-Data sourced from [Cocktails & Ingredients Dataset]([https://www.thecocktaildb.com/](https://www.kaggle.com/datasets/filipkin/cocktails-and-ingredients-dataset?select=cocktail_ingredients.csv))
+Data sourced from [Cocktails & Ingredients Dataset]([https://www.kaggle.com/datasets/filipkin/cocktails-and-ingredients-dataset?select=cocktail_ingredients.csv])
 
 ## Technology Stack
 
