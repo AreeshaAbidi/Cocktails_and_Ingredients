@@ -31,36 +31,6 @@ Cocktails_and_Ingredients/
     └── cocktail_images/   # Cocktail drink images
 ```
 
-## Setup & Running
-
-### Local Development
-
-1. Navigate to the project directory:
-   ```bash
-   cd Cocktails_and_Ingredients
-   ```
-
-2. Start a local web server (Python 3):
-   ```bash
-   python -m http.server 8000
-   ```
-   
-   Or for Python 2:
-   ```bash
-   python -m SimpleHTTPServer 8000
-   ```
-
-3. Open your browser and navigate to:
-   ```
-   http://localhost:8000
-   ```
-
-### Using Live Server (VS Code)
-
-1. Install the "Live Server" extension in VS Code
-2. Right-click on `index.html` and select "Open with Live Server"
-3. The browser will automatically open and refresh on file changes
-
 ## Usage
 
 1. **Search for Ingredients**: Type in the search box to find ingredients (e.g., "vodka", "lime")
@@ -70,27 +40,11 @@ Cocktails_and_Ingredients/
 5. **Explore Details**: Click any cocktail to see full details including recipe and image
 6. **Add Co-Ingredients**: In the "Co-Ingredients" tab, click bars to add suggested pairings
 
-## Design Decisions
 
-### Cup Visualization
-- **Why a cup?**: The cup metaphor is intuitive for layered ingredients and provides a visual anchor
-- **Stacked layers**: Each ingredient is rendered as a colored horizontal layer, with height representing equal "portions"
-- **Colors**: Each ingredient gets a consistent color using D3's Tableau10 color scheme for distinction
-
-### Interaction Techniques
-- **Autocomplete**: Reduces cognitive load by showing relevant ingredients
-- **Multi-view analysis**: Different perspectives (list, category, co-ingredients) enable discovery
-- **Click-to-add co-ingredients**: Encourages exploration of ingredient relationships
-- **Hover/click feedback**: Clear visual feedback for interactivity
-
-### Data Processing
-- **Frequency-based sorting**: Ingredients are sorted by how many cocktails they appear in
-- **Flexible matching**: Users can see ALL drinks with ANY selected ingredient (prevents results being too narrow)
-- **Co-ingredient recommendations**: The chart shows ingredients that frequently pair with selections
 
 ## Data Source
 
-Data sourced from [TheCocktailDB](https://www.thecocktaildb.com/), a free, open API for cocktail data.
+Data sourced from [Cocktails & Ingredients Dataset]([https://www.thecocktaildb.com/](https://www.kaggle.com/datasets/filipkin/cocktails-and-ingredients-dataset?select=cocktail_ingredients.csv))
 
 ## Technology Stack
 
