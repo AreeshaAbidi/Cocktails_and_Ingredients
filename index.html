@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail Cup Visualizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/saved-charts.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Left Buttons -->
+        <div class="top-buttons">
+            <button id="tabToggleBtn" class="tab-toggle-btn" title="Toggle between main and saved charts">📊 My Tab</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1>🍹 Cocktail Mixer</h1>
+            <p class="subtitle">Build your dream drink</p>
+        </header>
+
+        <!-- Main Content Grid (3 columns) -->
+        <div class="main-content">
+            <!-- SITE INFO SECTION (Row 1) -->
+            <div class="site-info-section">
+                <h3>About This Visualizer</h3>
+                <p>
+                    Welcome to the Cocktail Mixer! Build your perfect drink by selecting ingredients from our extensive database. 
+                    The cup visualization shows you exactly how your cocktail comes together, with each ingredient layer clearly 
+                    marked with quantities. Discover new drinks you can make, save your favorites, and explore the world of mixology.
+                </p>
+                <div class="site-info-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">🔍</span>
+                        <span class="feature-text"><strong>Search & Filter:</strong> Find cocktails by ingredients, category, or glass type</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🍹</span>
+                        <span class="feature-text"><strong>Visual Builder:</strong> See your drink composition in real-time</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📊</span>
+                        <span class="feature-text"><strong>Compare Drinks:</strong> Save and compare up to 6 cocktails side-by-side</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🎲</span>
+                        <span class="feature-text"><strong>Random Discovery:</strong> Click "Random Drink" to find your next favorite</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEFT PANEL: Ingredient Input & Selection -->
+            <div class="left-panel">
+                <div class="left-panel-content">
+                    <h2>Build your drink</h2>
+                    
+                    <!-- Ingredient/Drink Dropdown Search -->
+                    <div class="search-section">
+                        <label>Ingredients</label>
+                        <div class="dropdown-container">
+                            <button class="dropdown-toggle" id="dropdownToggle">
+                                <span id="dropdownLabel">Select ingredients...</span>
+                                <span class="dropdown-arrow">▼</span>
+                            </button>
+                            
+                            <div class="dropdown-menu" id="dropdownMenu">
+                                <input 
+                                    type="text" 
+                                    id="ingredientSearch" 
+                                    class="dropdown-search" 
+                                    placeholder="Search ingredients..."
+                                    autocomplete="off"
+                                >
+                                <div class="dropdown-sort-buttons">
+                                    <button class="sort-btn" id="sortByNameBtn" title="Sort by name">A-Z</button>
+                                    <button class="sort-btn" id="sortByPopularityBtn" title="Sort by usage count">Popular</button>
+                                </div>
+                                <div class="dropdown-list" id="ingredientList"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected Ingredients Display -->
+                    <div class="selected-ingredients">
+                        <div class="selected-ingredients-header">
+                            <h4>Selected Ingredients</h4>
+                            <button id="clearAllBtn" class="clear-all-btn" title="Clear all ingredients">Clear All</button>
+                        </div>
+                        <div id="selectedList" class="ingredient-pills"></div>
+                    </div>
+
+                    <!-- Random Drink Button -->
+                    <div class="random-drink-section">
+                        <button id="randomDrinkBtn" class="random-drink-btn">🎲 Random Drink</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER PANEL: Cup Visualization -->
+            <div class="center-panel">
+                <div class="center-panel-content">
+                    <!-- Notification Container (Center) -->
+                    <div id="notificationContainer" class="notification-container"></div>
+                    
+                    <!-- Add to Tab Button (Top-left corner) -->
+                    <button id="addToTabBtn" class="add-to-tab-btn-card" title="Save current chart to compare">➕ Add to Tab</button>
+                    
+                    <!-- Cup Visualization -->
+                    <div class="cup-container">
+                        <svg id="cupSvg" width="350" height="650"></svg>
+                        <div class="cup-legend" id="cupLegend"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: You Can Make Section -->
+            <div class="right-panel">
+                <div class="right-panel-content">
+                    <div class="right-panel-header">
+                        <h2>You can make...</h2>
+                        <div class="right-panel-buttons">
+                            <button id="viewAllDrinksBtn" class="view-all-btn" title="Toggle to view all drinks">📋 View All</button>
+                            <button id="filterToggleBtn" class="filter-toggle-btn" title="Toggle filters" style="display: none;">⚙</button>
+                        </div>
+                    </div>
+                    
+                    <div id="filterContainer" class="filter-container" style="display: none;">
+                        <input type="text" id="drinkSearchFilter" class="filter-search" placeholder="Search drinks..." />
+                        <select id="categoryFilterSelect" class="filter-select">
+                            <option value="">All Categories</option>
+                        </select>
+                        <select id="glassFilterSelect" class="filter-select">
+                            <option value="">All Glasses</option>
+                        </select>
+                        <div class="alcoholic-filter-group">
+                            <label>Contains Alcohol:</label>
+                            <div class="alcohol-buttons">
+                                <button class="alcohol-btn active" data-filter="optional">Optional</button>
+                                <button class="alcohol-btn" data-filter="alcoholic">Alcoholic</button>
+                                <button class="alcohol-btn" data-filter="non-alcoholic">Non-Alcoholic</button>
+                            </div>
+                        </div>
+                        <button id="clearFiltersBtn" class="clear-filters-btn">Clear Filters</button>
+                    </div>
+                    
+                    <div id="canMakeDrinksList" class="drinks-list"></div>
+                </div>
+            </div>
+
+            <!-- DRINK DETAILS PANEL (Bottom Right) -->
+            <div id="drinkDetailsPanel" class="drink-details-panel" style="display: none;">
+                <div id="drinkInfoCardSection" class="drink-info-card-section">
+                    <div id="drinkInfoCard" class="drink-info-card"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAVED CHARTS PANEL -->
+        <div id="savedChartsPanel" class="saved-charts-panel" style="display: none;">
+            <div class="saved-charts-header">
+                <h2>📊 Saved Charts</h2>
+                <button id="clearSavedBtn" class="clear-saved-btn" title="Clear all saved charts">Clear All</button>
+            </div>
+            <div id="savedChartsContainer" class="saved-charts-container"></div>
+        </div>
+
+        <!-- Attribution -->
+        <footer class="footer">
+            <p>Data source: <a href="https://www.thecocktaildb.com/" target="_blank">TheCocktailDB</a> | Created for CSC316 Assignment 3</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data-utils.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
