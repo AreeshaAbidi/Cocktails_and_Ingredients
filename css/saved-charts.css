@@ -43,8 +43,9 @@
 
 .saved-charts-container {
     display: flex;
-    justify-content: center;
-    min-width: 0;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
 }
 
 .saved-charts-card {
